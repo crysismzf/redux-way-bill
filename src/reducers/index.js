@@ -1,10 +1,10 @@
 import {combineReducers} from "redux";
 import tracks from "./tracks";
-import playlists from "./playlists";
+import info from "./info";
 import filterTracks from "./filterTracks";
 
 export default combineReducers({
     tracks,
-    playlists,
+    info,
     filterTracks
 })
