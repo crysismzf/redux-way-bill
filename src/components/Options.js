@@ -14,14 +14,43 @@ class Options extends React.Component {
         this.props.onCalculateRemainderKm();
     }
 
+    addPetrol() {
+        let data = this.addPetrolInput.value;
+        this.props.onAddPetrol(data);
+        this.props.onCalculateRemainderKm();
+    }
+
+    changeNumberList() {
+        let data = this.numberOfListInput.value;
+        this.props.onChangeNumberList(data);
+    }
+
+    changeDateList() {
+        let date = this.dateOfListInput.value;
+        this.props.onChangeDateList(date);
+    }
+
     render() {
         return (
             <div className="wrapper-item">
                 <div className="selectRoutes">
                     <span className="title">Первый путевой лист</span>
                     <br/><br/>
-                    <input type="number" className="input-selectRoutes" /> Номер путевого листа
+                    <input
+                        type="text"
+                        className="input-selectRoutes"
+                        value={this.props.info.numberOfList}
+                        ref={(input) => { this.numberOfListInput = input;}}
+                        onChange={this.changeNumberList.bind(this)}
+                    /> Номер путевого листа
                     <br/><br/>
+                    <input
+                        type="date"
+                        className="input-selectRoutes"
+                        ref={(input) => { this.dateOfListInput = input;}}
+                        onChange={this.changeDateList.bind(this)}
+                    /> Дата путевого
+                    листа<br/><br/>
                     <input
                         type="number"
                         className="input-selectRoutes"
@@ -30,24 +59,21 @@ class Options extends React.Component {
                         onChange={this.changeMileagePetrol.bind(this)}
                     /> Средний расход
                     <br/><br/>
-                    <input type="number" className="input-selectRoutes" /> Бензина
-                    залил <br/><br/>
                     <input
                         type="date"
                         ref={(input) => { this.newDateOfRefuelingInput = input; }}
                         className="input-selectRoutes"
                         onChange={this.newDateOfRefueling.bind(this)}
-                    /> Дата заправки<br/>
-                    <br/>
-                    <input type="date" className="input-selectRoutes"/> Дата путевого
-                    листа<br/><br/>
+                    /> Дата заправки<br/><br/>
+                    <input
+                        type="number"
+                        className="input-selectRoutes"
+                        ref={(input) => { this.addPetrolInput = input;}}
+                        onChange={this.addPetrol.bind(this)}
+                    /> Бензина
+                    залил <br/><br/>
                     <input type="number" className="input-selectRoutes" /> Общий километраж
                     <br/><br/>
-                    <div className="checkbox-list">
-                        <select>
-                            <option data-id="0">не выбрано</option>
-                        </select> <input type="checkbox"/> в обратную сторону
-                    </div>
                 </div>
             </div>
         )
@@ -67,6 +93,15 @@ export default connect (
         },
         onCalculateRemainderKm: () => {
             dispatch({ type: 'CALCULATE_REMAINDER_KM'})
-        }
+        },
+        onAddPetrol: (liters) => {
+            dispatch({type: 'ADD_PETROL', liters})
+        },
+        onChangeNumberList: (number) => {
+            dispatch({type: 'CHANGE_NUMBER_LIST', number})
+        },
+        onChangeDateList: (date) => {
+            dispatch({type: 'CHANGE_DATE_LIST', date})
+        },
     })
 )(Options)

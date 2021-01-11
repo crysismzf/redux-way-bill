@@ -4,10 +4,11 @@ const initialState = {
     petrolLimit: 5,
     dateOfRefuelingOld: "10.03.2020",
     dateOfRefuelingNew: "",
-    allPetrol: 10,
-    listNumber: "",
+    allPetrol: 5,
     mileagePetrol: 9.1,
-    limitKM: ''
+    limitKM: '',
+    numberOfList: "0",
+    dateOfList: ""
 };
 
 export default function info(state = initialState, action) {
@@ -21,12 +22,21 @@ export default function info(state = initialState, action) {
             newState.mileagePetrol = Number(action.mileagePetrol);
             return newState;
         case 'CALCULATE_REMAINDER_KM':
-            let data = ((newState.petrolLimit * 100)/newState.mileagePetrol).toFixed(0);
+            let data = ((newState.allPetrol * 100)/newState.mileagePetrol).toFixed(0);
             if (data > 0) {
                 newState.limitKM = data
             } else {
                 alert("Ошибка ввода, остаток километров должен быть больше 0")
             }
+            return newState;
+        case 'ADD_PETROL':
+           newState.allPetrol = newState.petrolLimit + Number(action.liters)
+            return newState;
+        case 'CHANGE_NUMBER_LIST':
+            newState.numberOfList = action.number
+            return newState;
+        case 'CHANGE_DATE_LIST':
+            newState.dateOfList = action.date
             return newState;
         default:
             return state;
