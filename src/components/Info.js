@@ -2,6 +2,11 @@ import React from "react";
 import {connect} from "react-redux";
 
 class Info extends React.Component {
+
+    componentDidMount() {
+        this.props.onCalculateRemainderKm();
+    }
+
     render() {
         return (
             <div className="wrapper-item">
@@ -13,7 +18,7 @@ class Info extends React.Component {
                     Дата последней заправки <span className="petrol"> {this.props.info.dateOfRefuelingOld} </span><br/>
                     Всего бензина <span className="sumBalance"> {this.props.info.allPetrol} </span> л.<br/>
                     Осталось километров <span
-                    className="sumKm"> </span> км.<br/>
+                    className="sumKm"> {this.props.info.limitKM} </span> км.<br/>
                 </div>
             </div>
         )
@@ -22,6 +27,11 @@ class Info extends React.Component {
 
 export default connect (
     state => ({
-        info: state.info
+        info: state
+    }),
+    dispatch => ({
+        onCalculateRemainderKm: () => {
+            dispatch({ type: 'CALCULATE_REMAINDER_KM'})
+        },
     })
 )(Info)

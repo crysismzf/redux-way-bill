@@ -11,6 +11,7 @@ class Options extends React.Component {
     changeMileagePetrol() {
         let data = this.mileagePetrolInput.value;
         this.props.onChangeMileagePetrol(data);
+        this.props.onCalculateRemainderKm();
     }
 
     render() {
@@ -55,7 +56,7 @@ class Options extends React.Component {
 
 export default connect (
     state => ({
-        info: state.info
+        info: state
     }),
     dispatch => ({
         onNewDateOfRefueling: (date) => {
@@ -63,6 +64,9 @@ export default connect (
         },
         onChangeMileagePetrol: (mileagePetrol) => {
             dispatch({type: 'CHANGE_MILEAGE_PETROL', mileagePetrol})
+        },
+        onCalculateRemainderKm: () => {
+            dispatch({ type: 'CALCULATE_REMAINDER_KM'})
         }
     })
 )(Options)
